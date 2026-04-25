@@ -1,14 +1,18 @@
-const express = require('express');
+const express = require("express");
+const path = require("path");
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Home Page');
-});
+// EJS setup
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "src/views"));
 
-app.get('/about', (req, res) => {
-  res.send('About Page');
-});
+// Static files
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+const mainRoutes = require("./src/routes/mainRoutes");
+app.use("/", mainRoutes);
 
 app.listen(3000, () => {
-  console.log('Server running');
+  console.log("Server running on http://localhost:3000");
 });
